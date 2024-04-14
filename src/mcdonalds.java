@@ -19,47 +19,75 @@ public class mcdonalds {
         drinks[1] = new drinksMenu("Guarana", 6.00);
         int orderCod = 0;
 
+        while(true){
+            apagartela();
+            System.out.println(red + "||*************************||" + reset);
+            System.out.println(red + "||" + yellow + "Bem vindo ao McDonald's!!" + red + "||" + reset);
+            System.out.println(red + "||*************************||" + reset);
+            mclogo();
+            System.out.println("\nOque podemos fazer por você?");
+            System.out.println("\n1 - Fazer pedido\n2 - Ver pedidos na fila\n3 - Encerrar sessão");
+            int menuOption = input.nextInt();
+            switch(menuOption){
+                case 1:
+                    while(true){
+                        apagartela();
+                        mclogo();
+                        apagartela();
+                        showSandwiches(sandwiches);
+                        showDrinks(drinks);
+                        System.out.println(yellow + "\n\n+---Escolha seu lanche!! (Digite o numero correspondente ao respectivo lanche) -->" + reset);
+                        int sandwichChoose = input.nextInt();
+                        System.out.println(yellow + "\n\n+---Escolha sua bebida!! (Digite o numero correspondente a respectiva bebida) -->" + reset);
+                        int drinkChoose = input.nextInt();
+                        input.nextLine();
+                        order customerOrder = new order(sandwiches[sandwichChoose], drinks[drinkChoose]);
+                        orders.add(customerOrder);
+                        System.out.println(green + "+----------PEDIDO----------+" + reset);
+                        System.out.println("                              ");
+                        System.out.println("                              ");
+                        System.out.println("     " + orders.get(orderCod).getSandwich().getSandwich() + " - R$" + orders.get(orderCod).getSandwich().getPrice() + "     ");
+                        System.out.println("     " + orders.get(orderCod).getDrink().getDrink() + " - R$" + orders.get(orderCod).getDrink().getPrice() + "     ");
+                        System.out.println("                              ");
+                        System.out.println("                              ");
+                        System.out.println(green + "+--------------------------+" + reset);
+                        System.out.println(green + "   Total a pagar: R$" + (orders.get(orderCod).getSandwich().getPrice() + orders.get(orderCod).getDrink().getPrice()) + reset);
+                        System.out.println("CONFIRMAR PEDIDO? (s/n) -> ");
+                        String option = input.nextLine();
+        
+                        if(option.equals("s")){
+                            System.out.println(yellow + "\n\nPedido realizado com sucesso!! Número do pedido --> " + orderCod + reset);
+                            orderCod++;
+                            break;
+                        } else if(option.equals("n")){
+                            orders.remove(orderCod);
+                            System.out.println("Pedido cancelado.");
+                            continue;
+                        }else{
+                            System.out.println("Opção inválida! Retornando ao menu principal...");
+                            break;
+                        }
+                    }
+                    break;
+                case 2:
+                   apagartela();
+                   System.out.println("+----------PEDIDOS----------+");
+                   System.out.println("N°     Lanche          Bebida");
+                   for(int i = 0; i < orders.size(); i++){
+                       System.out.println(i + "   " + orders.get(i).getSandwich().getSandwich() + "   " + orders.get(i).getDrink().getDrink());
+                   }
+                   Thread.sleep(5000);
+                   continue;
 
-        System.out.println(red + "||*************************||" + reset);
-        System.out.println(red + "||" + yellow + "Bem vindo ao McDonald's!!" + red + "||" + reset);
-        System.out.println(red + "||*************************||" + reset);
-        mclogo();
-        System.out.println("\nAperte ENTER para comecar -> ");
-        input.nextLine();
-        apagartela();
-        mclogo();
-        apagartela();
-        showSandwiches(sandwiches);
-        showDrinks(drinks);
-        System.out.println(yellow + "\n\n+---Escolha seu lanche!! (Digite o numero correspondente ao respectivo lanche) -->" + reset);
-        int sandwichChoose = input.nextInt();
-        System.out.println(yellow + "\n\n+---Escolha sua bebida!! (Digite o numero correspondente a respectiva bebida) -->" + reset);
-        int drinkChoose = input.nextInt();
-        input.nextLine();
-        order customerOrder = new order(sandwiches[sandwichChoose], drinks[drinkChoose]);
-        orders.add(customerOrder);
-        System.out.println(green + "+----------PEDIDO----------+" + reset);
-        System.out.println("                              ");
-        System.out.println("                              ");
-        System.out.println("     " + orders.get(orderCod).getSandwich().getSandwich() + " - R$" + orders.get(orderCod).getSandwich().getPrice() + "     ");
-        System.out.println("     " + orders.get(orderCod).getDrink().getDrink() + " - R$" + orders.get(orderCod).getDrink().getPrice() + "     ");
-        System.out.println("                              ");
-        System.out.println("                              ");
-        System.out.println(green + "+--------------------------+" + reset);
-        System.out.println(green + "   Total a pagar: R$" + (orders.get(orderCod).getSandwich().getPrice() + orders.get(orderCod).getDrink().getPrice()) + reset);
-        System.out.println("CONFIRMAR PEDIDO? (s/n) -> ");
-        String option = input.nextLine();
+                case 3:
+                   input.close();
+                   System.exit(0);
 
-        if(option.equals("s")){
-            System.out.println(yellow + "\n\nPedido realizado com sucesso!! Número do pedido --> " + orderCod + reset);
-            orderCod++;
-            input.close();
-        } else if(option.equals("n")){
-            orders.remove(orderCod);
-            input.close();
-        }else{
-            System.out.println("Opção inválida!");
-            input.close();
+                default:
+                   System.out.println("Opção inválida!!");
+                   Thread.sleep(2000);
+                   continue;
+            }
         }
     }
 
